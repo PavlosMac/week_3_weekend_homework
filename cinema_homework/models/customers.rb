@@ -32,6 +32,10 @@ def films
   results = Film.map_items(sql)
 end
 
+def total_tickets
+  tickets.count
+end
+
 def tickets
   sql = "SELECT * FROM tickets WHERE customer_id = #{@id}"
   result = Ticket.map_items(sql)
