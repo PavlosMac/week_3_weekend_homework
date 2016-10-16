@@ -2,26 +2,22 @@ require_relative('../db/sql_runner')
 
 class Ticket
 
-  attr_accessor :id, :customer_id, :film_id, :customer, :film
+  attr_accessor :id, :customer_id, :film_id
 
-  def initialize( film, customer )
+  def initialize( options )
     @id = id
-    @film_id = film.id.to_i
-    @customer_id = customer.id.to_i
-    @customer = customer
-    @film = film
+    @film_id = options['film_id'].to_i
+    @customer_id = options['customer_id'].to_i
   end
 
-  def create
-    sql = "INSERT INTO tickets (film_id, customer_id) VALUES (#{@film_id}, #{@customer_id}) RETURNING * "
-    result = SqlRunner.run(sql).first
-    @id = result['id'].to_i
-    return deduct_customer_funds
-  end
+ 
 
-  def deduct_customer_funds
-    @customer.funds -= @film.price
-    return @customer.update
+  def self.sell(film, customer)
+      customer.funds -= film.price
+      customer.update
+      sql = "INSERT INTO tickets (film_id, customer_id) VALUES (#{film.id}, #{customer.id}) RETURNING *"
+      result = SqlRunner.run(sql).first
+      @id = result['id'].to_i
   end
 
 

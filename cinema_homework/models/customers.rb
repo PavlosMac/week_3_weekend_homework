@@ -8,7 +8,9 @@ def initialize( options )
   @id = options['id'].to_i
   @name = options['name']
   @funds = options['funds'].to_f
+
 end
+
 
 
 def save
@@ -30,10 +32,11 @@ end
 def films
   sql = "SELECT f.* FROM films f INNER JOIN tickets t ON t.film_id = f.id WHERE t.customer_id = #{@id};"
   results = Film.map_items(sql)
+  return results
 end
 
 def total_tickets
-  tickets.count
+  return tickets.count
 end
 
 def tickets

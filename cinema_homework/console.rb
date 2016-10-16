@@ -25,16 +25,7 @@ customer3.save
 customer3.funds = 50.00
 customer3.update
 
-
-
-
-
-ticket1 = Ticket.new( film1, customer1 )
-ticket1.create
-ticket2 = Ticket.new( film2, customer1 )
-ticket2.create
-ticket3 = Ticket.new( film3, customer2 )
-ticket3.create
+ticket1 = Ticket.sell(film1, customer1)
 
 
 
