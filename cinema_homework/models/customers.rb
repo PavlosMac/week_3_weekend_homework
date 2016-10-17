@@ -61,5 +61,10 @@ def self.map_items(sql)
   return results.map{|customer| Customer.new(customer)}
 end
 
+def self.map_item(sql)
+  result = Customer.map_items(sql)
+  return result.first
+end
+
 
 end

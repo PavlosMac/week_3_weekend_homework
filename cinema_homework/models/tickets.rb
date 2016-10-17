@@ -11,13 +11,20 @@ class Ticket
   end
 
  
-
   def self.sell(film, customer)
       customer.funds -= film.price
       customer.update
       sql = "INSERT INTO tickets (film_id, customer_id) VALUES (#{film.id}, #{customer.id}) RETURNING *"
       result = SqlRunner.run(sql).first
       @id = result['id'].to_i
+      ticket = Ticket.map_item(sql)
+      return ticket
+  end
+
+  def customer
+    sql = "SELECT * FROM customers WHERE id = #{@customer_id}"
+    result = Customer.map_item(sql)
+    return result
   end
 
 
